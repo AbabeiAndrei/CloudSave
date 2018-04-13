@@ -33,22 +33,16 @@
             this.tpSettings = new System.Windows.Forms.TabPage();
             this.chkStartOnStartup = new System.Windows.Forms.CheckBox();
             this.tpAccounts = new System.Windows.Forms.TabPage();
-            this.gbGoogleDrive = new System.Windows.Forms.GroupBox();
-            this.pbGoogleDriveLogo = new System.Windows.Forms.PictureBox();
-            this.btnGoogleDriveConnect = new System.Windows.Forms.Button();
-            this.lblGoogleDriveState = new System.Windows.Forms.Label();
+            this.flwServices = new System.Windows.Forms.FlowLayoutPanel();
             this.tpLocations = new System.Windows.Forms.TabPage();
             this.dgvLocations = new System.Windows.Forms.DataGridView();
-            this.dgcLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgcGoogleDrive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.pnlActions = new System.Windows.Forms.Panel();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.dgcLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tcMain.SuspendLayout();
             this.tpSettings.SuspendLayout();
             this.tpAccounts.SuspendLayout();
-            this.gbGoogleDrive.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbGoogleDriveLogo)).BeginInit();
             this.tpLocations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLocations)).BeginInit();
             this.pnlActions.SuspendLayout();
@@ -90,7 +84,7 @@
             // 
             // tpAccounts
             // 
-            this.tpAccounts.Controls.Add(this.gbGoogleDrive);
+            this.tpAccounts.Controls.Add(this.flwServices);
             this.tpAccounts.Location = new System.Drawing.Point(4, 30);
             this.tpAccounts.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tpAccounts.Name = "tpAccounts";
@@ -100,43 +94,13 @@
             this.tpAccounts.Text = "Conturi";
             this.tpAccounts.UseVisualStyleBackColor = true;
             // 
-            // gbGoogleDrive
+            // flwServices
             // 
-            this.gbGoogleDrive.Controls.Add(this.pbGoogleDriveLogo);
-            this.gbGoogleDrive.Controls.Add(this.btnGoogleDriveConnect);
-            this.gbGoogleDrive.Controls.Add(this.lblGoogleDriveState);
-            this.gbGoogleDrive.Location = new System.Drawing.Point(9, 9);
-            this.gbGoogleDrive.Name = "gbGoogleDrive";
-            this.gbGoogleDrive.Size = new System.Drawing.Size(402, 105);
-            this.gbGoogleDrive.TabIndex = 0;
-            this.gbGoogleDrive.TabStop = false;
-            this.gbGoogleDrive.Text = "Google Drive";
-            // 
-            // pbGoogleDriveLogo
-            // 
-            this.pbGoogleDriveLogo.Location = new System.Drawing.Point(7, 25);
-            this.pbGoogleDriveLogo.Name = "pbGoogleDriveLogo";
-            this.pbGoogleDriveLogo.Size = new System.Drawing.Size(151, 64);
-            this.pbGoogleDriveLogo.TabIndex = 2;
-            this.pbGoogleDriveLogo.TabStop = false;
-            // 
-            // btnGoogleDriveConnect
-            // 
-            this.btnGoogleDriveConnect.Location = new System.Drawing.Point(164, 49);
-            this.btnGoogleDriveConnect.Name = "btnGoogleDriveConnect";
-            this.btnGoogleDriveConnect.Size = new System.Drawing.Size(161, 40);
-            this.btnGoogleDriveConnect.TabIndex = 1;
-            this.btnGoogleDriveConnect.Text = "Conectare";
-            this.btnGoogleDriveConnect.UseVisualStyleBackColor = true;
-            // 
-            // lblGoogleDriveState
-            // 
-            this.lblGoogleDriveState.AutoSize = true;
-            this.lblGoogleDriveState.Location = new System.Drawing.Point(160, 25);
-            this.lblGoogleDriveState.Name = "lblGoogleDriveState";
-            this.lblGoogleDriveState.Size = new System.Drawing.Size(88, 21);
-            this.lblGoogleDriveState.TabIndex = 0;
-            this.lblGoogleDriveState.Text = "Neconectat";
+            this.flwServices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flwServices.Location = new System.Drawing.Point(4, 5);
+            this.flwServices.Name = "flwServices";
+            this.flwServices.Size = new System.Drawing.Size(875, 411);
+            this.flwServices.TabIndex = 1;
             // 
             // tpLocations
             // 
@@ -154,26 +118,12 @@
             // 
             this.dgvLocations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLocations.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dgcLocation,
-            this.dgcGoogleDrive});
+            this.dgcLocation});
             this.dgvLocations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvLocations.Location = new System.Drawing.Point(4, 5);
             this.dgvLocations.Name = "dgvLocations";
             this.dgvLocations.Size = new System.Drawing.Size(875, 411);
             this.dgvLocations.TabIndex = 0;
-            // 
-            // dgcLocation
-            // 
-            this.dgcLocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dgcLocation.HeaderText = "Location";
-            this.dgcLocation.Name = "dgcLocation";
-            this.dgcLocation.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgcLocation.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // dgcGoogleDrive
-            // 
-            this.dgcGoogleDrive.HeaderText = "Google Drive";
-            this.dgcGoogleDrive.Name = "dgcGoogleDrive";
             // 
             // pnlActions
             // 
@@ -196,6 +146,7 @@
             this.btnSave.TabIndex = 1;
             this.btnSave.Text = "Ok";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 
@@ -207,6 +158,15 @@
             this.btnCancel.TabIndex = 0;
             this.btnCancel.Text = "Anuleaza";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // dgcLocation
+            // 
+            this.dgcLocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgcLocation.HeaderText = "Location";
+            this.dgcLocation.Name = "dgcLocation";
+            this.dgcLocation.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgcLocation.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // SettingsForm
             // 
@@ -223,9 +183,6 @@
             this.tpSettings.ResumeLayout(false);
             this.tpSettings.PerformLayout();
             this.tpAccounts.ResumeLayout(false);
-            this.gbGoogleDrive.ResumeLayout(false);
-            this.gbGoogleDrive.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbGoogleDriveLogo)).EndInit();
             this.tpLocations.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLocations)).EndInit();
             this.pnlActions.ResumeLayout(false);
@@ -238,18 +195,14 @@
         private System.Windows.Forms.TabControl tcMain;
         private System.Windows.Forms.TabPage tpSettings;
         private System.Windows.Forms.TabPage tpAccounts;
-        private System.Windows.Forms.GroupBox gbGoogleDrive;
-        private System.Windows.Forms.PictureBox pbGoogleDriveLogo;
-        private System.Windows.Forms.Button btnGoogleDriveConnect;
-        private System.Windows.Forms.Label lblGoogleDriveState;
         private System.Windows.Forms.TabPage tpLocations;
         private System.Windows.Forms.Panel pnlActions;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.DataGridView dgvLocations;
         private System.Windows.Forms.CheckBox chkStartOnStartup;
+        private System.Windows.Forms.FlowLayoutPanel flwServices;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgcLocation;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn dgcGoogleDrive;
     }
 }
 

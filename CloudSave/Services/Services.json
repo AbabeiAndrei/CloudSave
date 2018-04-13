@@ -1,0 +1,9 @@
+﻿{
+   "Services":
+   [
+     {
+       "ServiceName": "GoogleDrive",
+       "ServicePlugin": "C:\\Users\\andrei.ababei\\Documents\\Visual Studio 2017\\Projects\\CloudSave\\CloudSave.GoogleDrive\\bin\\Debug\\CloudSave.GoogleDrive.dll"
+     }
+   ]
+}
