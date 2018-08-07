@@ -14,7 +14,12 @@ namespace CloudSave.GeneralLibrary
         #region Overrides of JsonConverter
 
         /// <inheritdoc />
-        public override bool CanConvert(Type objectType) => objectType.IsSubclassOf(typeof(TSource));
+        public override bool CanConvert(Type objectType)
+        {
+            var type = typeof(TSource);
+
+            return type != objectType && objectType.IsAssignableFrom(type);
+        }
 
         /// <inheritdoc />
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

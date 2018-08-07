@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CloudSave.Connector;
+using CloudSave.Services;
+
+using ConnectionState = CloudSave.Connector.ConnectionState;
 
 namespace CloudSave.GoogleDrive
 {
@@ -19,6 +22,12 @@ namespace CloudSave.GoogleDrive
         {
             InitializeComponent();
             _service = service;
+        }
+
+        private void btnGoogleDriveConnect_Click(object sender, EventArgs e)
+        {
+            _service.Settings = new CloudServiceSetting("aaaa", new CloudServiceAuth("aa", "aaaa"));
+            _service.State = ConnectionState.Connected;
         }
     }
 }

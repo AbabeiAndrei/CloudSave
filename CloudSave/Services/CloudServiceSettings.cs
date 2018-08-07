@@ -23,9 +23,19 @@ namespace CloudSave.Services
         /// <inheritdoc />
         public IDictionary<string, ICloudServiceSetting> Settings { get; set; }
 
-        public ICloudServiceSetting this[string key] => Settings.ContainsKey(key)
-                                                                ? Settings[key]
-                                                                : null;
+        public ICloudServiceSetting this[string key]
+        {
+            get => Settings.ContainsKey(key)
+                           ? Settings[key]
+                           : null;
+            set
+            {
+                if (Settings.ContainsKey(key))
+                    Settings[key] = value;
+                else
+                    Settings.Add(key, value);
+            }
+        }
 
         #endregion
 

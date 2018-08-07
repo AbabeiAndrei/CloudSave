@@ -10,7 +10,7 @@ namespace CloudSave.GoogleDrive
 {
     public class GoogleDriveService : CloudService
     {
-        public override string Name => "Google Drive";
+        public override string Name => "GoogleDrive";
 
         public GoogleDriveService(ICloudServiceSetting settings) 
             : base(settings)

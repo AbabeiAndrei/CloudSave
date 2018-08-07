@@ -46,8 +46,8 @@ namespace CloudSave.Services
         public CloudServiceAuth(string clientId, string clientSecret)
             : this()
         {
-            ClientId = clientId;
-            ClientSecret = clientSecret;
+            _clientId = clientId;
+            _clientSecret = clientSecret;
         }
 
         [NotifyPropertyChangedInvocator]

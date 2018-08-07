@@ -56,6 +56,10 @@
       <Project>{E625917A-FF8F-4187-8BAB-41F024C43413}</Project>
       <Name>CloudSave.Connector</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CloudSave\CloudSave.csproj">
+      <Project>{A7670756-ADCC-44B5-895F-EDB5F7F252C9}</Project>
+      <Name>CloudSave</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ConnectControl.resx">

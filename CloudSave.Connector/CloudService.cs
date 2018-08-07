@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -12,6 +13,7 @@ namespace CloudSave.Connector
         #region Fields
 
         private ICloudServiceSetting _settings;
+        private ConnectionState _state;
 
         #endregion
 
@@ -19,7 +21,7 @@ namespace CloudSave.Connector
 
         public abstract string Name { get; }
 
-        public ICloudServiceSetting Settings
+        public virtual ICloudServiceSetting Settings
         {
             get => _settings;
             set
@@ -32,7 +34,20 @@ namespace CloudSave.Connector
             }
         }
 
-        public bool IsConnected => Settings != null && Settings.Authentication.HaveValues();
+        public virtual bool IsConnected => Settings != null && Settings.Authentication.HaveValues();
+
+        public virtual ConnectionState State
+        {
+            get => _state;
+            set
+            {
+                if (_state == value) 
+                    return;
+
+                _state = value;
+                OnConnectionChanged();
+            }
+        }
 
         #endregion
 
@@ -40,13 +55,16 @@ namespace CloudSave.Connector
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public event EventHandler ConnectionChanged;
+
         #endregion
 
         #region Constructors
 
         protected CloudService(ICloudServiceSetting settings)
         {
-            Settings = settings;
+            _settings = settings;
+            _state = ConnectionState.Disconected;
         }
 
         #endregion
@@ -63,6 +81,11 @@ namespace CloudSave.Connector
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected virtual void OnConnectionChanged()
+        {
+            ConnectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion

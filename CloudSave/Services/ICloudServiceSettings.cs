@@ -6,7 +6,7 @@ namespace CloudSave.Services
 {
     public interface ICloudServiceSettings
     {
-        ICloudServiceSetting this[string key] { get; }
+        ICloudServiceSetting this[string key] { get; set; }
 
         IDictionary<string, ICloudServiceSetting> Settings { get; set; }
     }

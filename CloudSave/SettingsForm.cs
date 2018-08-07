@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Collections.Generic;
 
+using CloudSave.Annotations;
+
 using Newtonsoft.Json;
 
 using CloudSave.Services;
@@ -83,6 +85,9 @@ namespace CloudSave
         
         private void CloudServiceSettingChanged(object sender, PropertyChangedEventArgs e)
         {
+            if(!(sender is CloudService service))
+                return;
+            _settings[service.Name] = service.Settings;
             Settings.Default.CloudServiceSettings = JsonConvert.SerializeObject(_settings);
         }
 
@@ -130,9 +135,10 @@ namespace CloudSave
                 new GenericJsonConverter<CloudServiceAuth>()
             };
 
-            _settings = !string.IsNullOrEmpty(settingsSerialized) 
-                                ? JsonConvert.DeserializeObject<ICloudServiceSettings>(settingsSerialized, converters) 
-                                : new CloudServiceSettings();
+            if(_settings == null)
+                _settings = !string.IsNullOrEmpty(settingsSerialized) 
+                                    ? JsonConvert.DeserializeObject<ICloudServiceSettings>(settingsSerialized, converters) 
+                                    : new CloudServiceSettings();
 
             try
             {
@@ -152,23 +158,43 @@ namespace CloudSave
 
                     listServices.AddRange(cloudServices);
 
-                    var controls = cloudServices.Foreach(cs => cs.PropertyChanged += CloudServiceSettingChanged)
+                    var controls = cloudServices.Foreach(cs =>
+                                                         {
+                                                             cs.PropertyChanged += CloudServiceSettingChanged;
+                                                             cs.ConnectionChanged += (s, e) =>
+                                                             {
+                                                                 LoadServices();
+                                                                 LoadSettings();
+                                                             };
+                                                         })
                                                 .Select(cs => cs.CreateControl());
 
                     flwServices.Controls.AddRange(controls.ToArray());
                 }
 
-                dgvLocations.Columns.Clear();
-                dgvLocations.Columns.AddRange(listServices.Where(cs => cs.IsConnected)
-                                                          .Select(CreateLocationsServiceColumn)
-                                                          .Insert(CreateLocationsPathColumn())
-                                                          .ToArray());
+                CreateLocationColumns(listServices);
+
+                if(_settings.Settings.Count <= 0)
+                    ShowForm(this, EventArgs.Empty);
             }
             finally
             {
                 dgvLocations.ResumeLayout();
                 flwServices.ResumeLayout();
             }
+
+        }
+
+        private void CreateLocationColumns(IEnumerable<CloudService> listServices)
+        {
+            if (listServices == null) 
+                throw new ArgumentNullException(nameof(listServices));
+
+            dgvLocations.Columns.Clear();
+            dgvLocations.Columns.AddRange(listServices.Where(cs => cs.IsConnected)
+                                                      .Select(CreateLocationsServiceColumn)
+                                                      .Insert(CreateLocationsPathColumn())
+                                                      .ToArray());
         }
 
         private static DataGridViewColumn CreateLocationsPathColumn()
@@ -207,15 +233,17 @@ namespace CloudSave
                 if(_settings == null)
                     return;
 
-                var items = _settings.Settings.SelectMany(kvp => kvp.Value.Locations)
-                                     .Select(l => 
-                                    (
-                                        Location: l, 
-                                        Services: _settings.Settings.Where(kvp => kvp.Value.Locations.Contains(l))
+                var items = _settings.Settings.Where(kvp => kvp.Value.Locations?.Any() ?? false)
+                                     .SelectMany(kvp => kvp.Value.Locations)
+                                     .Select(localtion => 
+                                     (
+                                        Location: localtion, 
+                                        Services: _settings.Settings.Where(kvp => kvp.Value.Locations.Contains(localtion))
                                                            .Select(kvp => kvp.Key)
-                                    ));
+                                     ));
 
-                dgvLocations.Rows.AddRange(items.Select(CreateLocationRow).ToArray());
+                foreach (var item in items)
+                    CreateLocationRow(item);
             }
             finally
             {
@@ -224,16 +252,17 @@ namespace CloudSave
             }
         }
 
-        private DataGridViewRow CreateLocationRow((string Location, IEnumerable<string> Services) setting)
+        private void CreateLocationRow((string Location, IEnumerable<string> Services) setting)
         {
-            var dgvr = new DataGridViewRow();
-
-            dgvr.Cells[0].Value = setting.Location;
+            var values = new List<object>
+            {
+                setting.Location
+            };
 
             for (var i = 1; i < dgvLocations.ColumnCount; i++)
-                dgvr.Cells[i].Value = setting.Services.Contains(dgvLocations.Columns[i].Name);
+                values.Add(setting.Services.Contains(dgvLocations.Columns[i].Name));
 
-            return dgvr;
+            dgvLocations.Rows.Add(values.ToArray());
         }
 
         private static IEnumerable<CloudService> CreateServiceControl(Service service, ICloudServiceSettings settings)

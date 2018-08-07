@@ -66,6 +66,7 @@
             this.btnGoogleDriveConnect.TabIndex = 1;
             this.btnGoogleDriveConnect.Text = "Conectare";
             this.btnGoogleDriveConnect.UseVisualStyleBackColor = true;
+            this.btnGoogleDriveConnect.Click += new System.EventHandler(this.btnGoogleDriveConnect_Click);
             // 
             // lblGoogleDriveState
             // 
