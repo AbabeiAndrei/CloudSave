@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using CloudSave.Connector;
-using CloudSave.Services;
+using CloudSave.Connector.Auth;
 
 using ConnectionState = CloudSave.Connector.ConnectionState;
 
@@ -24,10 +18,18 @@ namespace CloudSave.GoogleDrive
             _service = service;
         }
 
+        private void ConnectControl_Load(object sender, EventArgs e)
+        {
+            lblGoogleDriveState.Text = _service.State.ToString();
+            btnGoogleDriveConnect.Text = _service.IsConnected ? "Disconect" : "Connect";
+        }
+
         private void btnGoogleDriveConnect_Click(object sender, EventArgs e)
         {
-            _service.Settings = new CloudServiceSetting("aaaa", new CloudServiceAuth("aa", "aaaa"));
             _service.State = ConnectionState.Connected;
+            _service.Settings = new CloudServiceSetting("",
+                                                        new CloudServiceAuth("842799249524-3iabd27qua7a50i3c9d0q5e6gmbnr2i6.apps.googleusercontent.com", 
+                                                                             "AQ77WELCv5F1ya2H96CcU_3d"));
         }
     }
 }

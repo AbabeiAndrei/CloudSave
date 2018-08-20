@@ -1,20 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-using CloudSave.Annotations;
-using CloudSave.Connector;
-using CloudSave.Connector.Auth;
-using CloudSave.GeneralLibrary;
-
-using Newtonsoft.Json;
-
-namespace CloudSave.Services
+namespace CloudSave.Connector.Auth
 {
     public class CloudServiceSettings : ICloudServiceSettings
     {
@@ -51,9 +37,15 @@ namespace CloudSave.Services
 
     public class CloudServiceSetting : ICloudServiceSetting
     {
+        private string _endpoint;
+
         #region Properties
 
-        public virtual string Endpoint { get; }
+        public virtual string Endpoint
+        {
+            get => _endpoint;
+            set => _endpoint = value;
+        }
 
         public virtual ICloudServiceAuth Authentication { get; }
         
@@ -65,7 +57,7 @@ namespace CloudSave.Services
 
         public CloudServiceSetting(string endpoint, ICloudServiceAuth authentication)
         {
-            Endpoint = endpoint;
+            _endpoint = endpoint;
             Authentication = authentication;
         }
 

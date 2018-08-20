@@ -1,14 +1,18 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using System.ComponentModel;
+using System.Drawing;
+using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
-using CloudSave.Connector.Annotations;
 using CloudSave.Connector.Auth;
+using CloudSave.Connector.Annotations;
 
 namespace CloudSave.Connector
 {
-    public abstract class CloudService : INotifyPropertyChanged
+    public abstract class CloudService : ICloudService, INotifyPropertyChanged
     {
         #region Fields
 
@@ -49,6 +53,8 @@ namespace CloudSave.Connector
             }
         }
 
+        public Icon Icon => null;
+
         #endregion
 
         #region Events
@@ -64,14 +70,20 @@ namespace CloudSave.Connector
         protected CloudService(ICloudServiceSetting settings)
         {
             _settings = settings;
-            _state = ConnectionState.Disconected;
+            _state = _settings?.Authentication?.HaveValues() ?? false ? ConnectionState.Connected : ConnectionState.Disconected;
         }
 
         #endregion
 
         #region Public methods
-
+        
         public abstract Control CreateControl();
+
+        public abstract Task UploadFile(string file, CancellationToken cancellationToken = default(CancellationToken));
+
+        public abstract Task UpdateFile(string file, CancellationToken cancellationToken = default(CancellationToken));
+
+        public abstract Task<Stream> GetFile(string file, CancellationToken cancellationToken = default(CancellationToken));
 
         #endregion
 

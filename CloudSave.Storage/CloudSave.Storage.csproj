@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E625917A-FF8F-4187-8BAB-41F024C43413}</ProjectGuid>
+    <ProjectGuid>{507DBCE6-5493-4FB6-B8A7-D23F2E3BCC7C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CloudSave.Connector</RootNamespace>
-    <AssemblyName>CloudSave.Connector</AssemblyName>
+    <RootNamespace>CloudSave.Storage</RootNamespace>
+    <AssemblyName>CloudSave.Storage</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,16 +43,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth\CloudServiceAuth.cs" />
-    <Compile Include="Auth\CloudServiceSettings.cs" />
-    <Compile Include="Auth\ICloudServiceSettings.cs" />
-    <Compile Include="CloudService.cs" />
-    <Compile Include="Auth\ICloudServiceAuth.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="ICloudService.cs" />
-    <Compile Include="ICloudServiceSetting.cs" />
-    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ConnectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConnectControl.Designer.cs">
+      <DependentUpon>ConnectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LocalStorageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CloudSave.Connector\CloudSave.Connector.csproj">
+      <Project>{e625917a-ff8f-4187-8bab-41f024c43413}</Project>
+      <Name>CloudSave.Connector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CloudSave.GeneralLibrary\CloudSave.GeneralLibrary.csproj">
+      <Project>{1fe97868-4ad5-4286-b438-168483512e57}</Project>
+      <Name>CloudSave.GeneralLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ConnectControl.resx">
+      <DependentUpon>ConnectControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FH63XNDI504TRGD.LARGE.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

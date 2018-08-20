@@ -36,10 +36,11 @@
             this.flwServices = new System.Windows.Forms.FlowLayoutPanel();
             this.tpLocations = new System.Windows.Forms.TabPage();
             this.dgvLocations = new System.Windows.Forms.DataGridView();
+            this.dgcLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlActions = new System.Windows.Forms.Panel();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.dgcLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chkShowNotifications = new System.Windows.Forms.CheckBox();
             this.tcMain.SuspendLayout();
             this.tpSettings.SuspendLayout();
             this.tpAccounts.SuspendLayout();
@@ -63,6 +64,7 @@
             // 
             // tpSettings
             // 
+            this.tpSettings.Controls.Add(this.chkShowNotifications);
             this.tpSettings.Controls.Add(this.chkStartOnStartup);
             this.tpSettings.Location = new System.Drawing.Point(4, 30);
             this.tpSettings.Name = "tpSettings";
@@ -125,6 +127,14 @@
             this.dgvLocations.Size = new System.Drawing.Size(875, 411);
             this.dgvLocations.TabIndex = 0;
             // 
+            // dgcLocation
+            // 
+            this.dgcLocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgcLocation.HeaderText = "Location";
+            this.dgcLocation.Name = "dgcLocation";
+            this.dgcLocation.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgcLocation.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // pnlActions
             // 
             this.pnlActions.Controls.Add(this.btnSave);
@@ -160,13 +170,15 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // dgcLocation
+            // chkShowNotifications
             // 
-            this.dgcLocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dgcLocation.HeaderText = "Location";
-            this.dgcLocation.Name = "dgcLocation";
-            this.dgcLocation.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgcLocation.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.chkShowNotifications.AutoSize = true;
+            this.chkShowNotifications.Location = new System.Drawing.Point(9, 38);
+            this.chkShowNotifications.Name = "chkShowNotifications";
+            this.chkShowNotifications.Size = new System.Drawing.Size(131, 25);
+            this.chkShowNotifications.TabIndex = 1;
+            this.chkShowNotifications.Text = "Arata notificari";
+            this.chkShowNotifications.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
@@ -203,6 +215,7 @@
         private System.Windows.Forms.CheckBox chkStartOnStartup;
         private System.Windows.Forms.FlowLayoutPanel flwServices;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgcLocation;
+        private System.Windows.Forms.CheckBox chkShowNotifications;
     }
 }
 

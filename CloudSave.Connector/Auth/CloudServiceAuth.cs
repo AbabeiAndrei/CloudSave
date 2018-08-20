@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-using CloudSave.Annotations;
-using CloudSave.Connector.Auth;
+using CloudSave.Connector.Annotations;
 
-namespace CloudSave.Services
+namespace CloudSave.Connector.Auth
 {
     public class CloudServiceAuth : ICloudServiceAuth, INotifyPropertyChanged
     {

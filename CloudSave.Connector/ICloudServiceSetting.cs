@@ -9,7 +9,7 @@ namespace CloudSave.Connector
 {
     public interface ICloudServiceSetting
     {
-        string Endpoint { get; }
+        string Endpoint { get; set; }
         ICloudServiceAuth Authentication { get; }
         IList<string> Locations { get; set; }
     }

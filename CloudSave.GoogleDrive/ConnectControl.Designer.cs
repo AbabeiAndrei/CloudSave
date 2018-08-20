@@ -51,9 +51,11 @@
             // 
             // pbGoogleDriveLogo
             // 
+            this.pbGoogleDriveLogo.Image = global::CloudSave.GoogleDrive.Properties.Resources.google2_0_0;
             this.pbGoogleDriveLogo.Location = new System.Drawing.Point(7, 25);
             this.pbGoogleDriveLogo.Name = "pbGoogleDriveLogo";
             this.pbGoogleDriveLogo.Size = new System.Drawing.Size(151, 64);
+            this.pbGoogleDriveLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbGoogleDriveLogo.TabIndex = 2;
             this.pbGoogleDriveLogo.TabStop = false;
             // 
@@ -84,6 +86,7 @@
             this.Controls.Add(this.gbGoogleDrive);
             this.Name = "ConnectControl";
             this.Size = new System.Drawing.Size(332, 95);
+            this.Load += new System.EventHandler(this.ConnectControl_Load);
             this.gbGoogleDrive.ResumeLayout(false);
             this.gbGoogleDrive.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbGoogleDriveLogo)).EndInit();

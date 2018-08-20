@@ -6,13 +6,13 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Collections.Generic;
-
-using CloudSave.Annotations;
+using System.Threading;
 
 using Newtonsoft.Json;
 
 using CloudSave.Services;
 using CloudSave.Connector;
+using CloudSave.Connector.Auth;
 using CloudSave.Properties;
 using CloudSave.GeneralLibrary;
 using CloudSave.GeneralLibrary.Extensions;
@@ -26,6 +26,11 @@ namespace CloudSave
         private readonly NotifyIcon  _trayIcon;
         private readonly ContextMenu _trayMenu;
         private ICloudServiceSettings _settings;
+        private List<CloudService> _listServices;
+        private IFileMd5Service _fileMd5Map;
+        private readonly NotifyIcon _notifyIcon;
+
+        public IFileChecker Runner { get; private set; }
 
         #endregion
 
@@ -47,6 +52,11 @@ namespace CloudSave
                 Visible = true
             };
             _trayIcon.DoubleClick += ShowForm;
+            
+            _notifyIcon = new NotifyIcon
+            {
+                Visible = true
+            };
         }
 
         #endregion
@@ -55,9 +65,19 @@ namespace CloudSave
 
         protected override void OnLoad(EventArgs e)
         {
+            const string md5File = "Services\\md5.map";
+
             SetFormVisibility(false);
-            LoadSettings();
             LoadServices();
+            LoadSettings();
+            
+            _fileMd5Map = new FileMd5Service(md5File);
+            Runner = new FileChecker(_listServices, _fileMd5Map);
+            Runner.StartUploading += (sender, args) => ShowNotification(args.Type.ToString(), args.FileName, args.Provider?.Icon);
+            Runner.FinishedUploading += (sender, args) => ShowNotification($"Finished {args.Type}ing", args.FileName, args.Provider?.Icon);
+            Runner.ErrorUploading += (sender, args) => ShowNotification($"Error {args.Type}ing", args.FileName + Environment.NewLine + args.Exception.Message, args?.Provider?.Icon);
+
+            Runner.Run(CancellationToken.None);
 
             base.OnLoad(e);
         }
@@ -93,14 +113,37 @@ namespace CloudSave
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            foreach (var service in _listServices)
+                service.Settings.Locations = new List<string>();
+
+            foreach (DataGridViewRow row in dgvLocations.Rows)
+            {
+                if(row.Cells[0].Value == null)
+                    continue;
+                
+                var location = row.Cells[0].Value.ToString();
+
+                foreach (var service in _listServices)
+                {
+                    if((bool)row.Cells[service.Name].Value)
+                        service.Settings.Locations.Add(location);
+                }
+            }
+
+            Settings.Default.LaunchAtStartup = chkStartOnStartup.Checked;
+            Settings.Default.ShowNotifications = chkShowNotifications.Checked;
+            Settings.Default.CloudServiceSettings = JsonConvert.SerializeObject(_settings);
+
             Settings.Default.Save();
+
+            Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Settings.Default.Reload();
-            LoadServices();
             LoadSettings();
+            LoadServices();
         }
 
         #endregion
@@ -150,13 +193,13 @@ namespace CloudSave
 
                 flwServices.Controls.Clear();
 
-                var listServices = new List<CloudService>();
+                _listServices = new List<CloudService>();
                     
                 foreach (var service in services.Services)
                 {
                     var cloudServices = CreateServiceControl(service, _settings).ToList();
 
-                    listServices.AddRange(cloudServices);
+                    _listServices.AddRange(cloudServices);
 
                     var controls = cloudServices.Foreach(cs =>
                                                          {
@@ -172,7 +215,7 @@ namespace CloudSave
                     flwServices.Controls.AddRange(controls.ToArray());
                 }
 
-                CreateLocationColumns(listServices);
+                CreateLocationColumns(_listServices);
 
                 if(_settings.Settings.Count <= 0)
                     ShowForm(this, EventArgs.Empty);
@@ -218,6 +261,7 @@ namespace CloudSave
         private void LoadSettings()
         {
             chkStartOnStartup.Checked = Settings.Default.LaunchAtStartup;
+            chkShowNotifications.Checked = Settings.Default.ShowNotifications;
             LoadLocations();
         }
 
@@ -274,6 +318,22 @@ namespace CloudSave
                       .Select(t => (CloudService)Activator.CreateInstance(t, settings[service.Name]));
         }
 
+        private void ShowNotification(string title, string body, Icon icon = null)
+        {
+            if(!Settings.Default.ShowNotifications)
+                return;
+
+            if (title != null)
+                _notifyIcon.BalloonTipTitle = title;
+
+            if (body != null)
+                _notifyIcon.BalloonTipText = body;
+
+            _notifyIcon.Icon = icon ?? SystemIcons.Application;
+                
+            _notifyIcon.ShowBalloonTip(3000);
+        }
+
         private void DisposeComponents(bool isDisposing)
         {
             if (!isDisposing) 
@@ -281,6 +341,8 @@ namespace CloudSave
 
             _trayIcon.Dispose();
             _trayMenu.Dispose();
+            _notifyIcon.Dispose();
+            Runner.Dispose();
         }
 
         #endregion

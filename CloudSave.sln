@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSave.GoogleDrive", "Cl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSave.GeneralLibrary", "CloudSave.GeneralLibrary\CloudSave.GeneralLibrary.csproj", "{1FE97868-4AD5-4286-B438-168483512E57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSave.Dropbox", "CloudSave.Dropbox\CloudSave.Dropbox.csproj", "{236200B8-C1A4-4299-922F-96DAB5998387}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSave.OneDrive", "CloudSave.OneDrive\CloudSave.OneDrive.csproj", "{61201FA0-F5B9-4C3E-945A-55797229EE79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSave.Storage", "CloudSave.Storage\CloudSave.Storage.csproj", "{507DBCE6-5493-4FB6-B8A7-D23F2E3BCC7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +39,18 @@ Global
 		{1FE97868-4AD5-4286-B438-168483512E57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FE97868-4AD5-4286-B438-168483512E57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FE97868-4AD5-4286-B438-168483512E57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{236200B8-C1A4-4299-922F-96DAB5998387}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{236200B8-C1A4-4299-922F-96DAB5998387}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{236200B8-C1A4-4299-922F-96DAB5998387}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{236200B8-C1A4-4299-922F-96DAB5998387}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61201FA0-F5B9-4C3E-945A-55797229EE79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61201FA0-F5B9-4C3E-945A-55797229EE79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61201FA0-F5B9-4C3E-945A-55797229EE79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61201FA0-F5B9-4C3E-945A-55797229EE79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{507DBCE6-5493-4FB6-B8A7-D23F2E3BCC7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{507DBCE6-5493-4FB6-B8A7-D23F2E3BCC7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{507DBCE6-5493-4FB6-B8A7-D23F2E3BCC7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{507DBCE6-5493-4FB6-B8A7-D23F2E3BCC7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

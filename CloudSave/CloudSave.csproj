@@ -49,10 +49,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Services\CloudServiceAuth.cs" />
-    <Compile Include="Services\CloudServiceSettings.cs" />
-    <Compile Include="Services\ICloudServiceSettings.cs" />
+    <Compile Include="Services\FileChecker.cs" />
+    <Compile Include="Services\FileMd5Service.cs" />
+    <Compile Include="Services\IFileChecker.cs" />
+    <Compile Include="Services\IFileMd5Service.cs" />
+    <Compile Include="Services\IUploadEventArgs.cs" />
     <Compile Include="Services\ServiceConfig.cs" />
+    <Compile Include="Services\UploadEventArgs.cs" />
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,9 +99,21 @@
       <Project>{E625917A-FF8F-4187-8BAB-41F024C43413}</Project>
       <Name>CloudSave.Connector</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CloudSave.Dropbox\CloudSave.Dropbox.csproj">
+      <Project>{236200b8-c1a4-4299-922f-96dab5998387}</Project>
+      <Name>CloudSave.Dropbox</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CloudSave.GeneralLibrary\CloudSave.GeneralLibrary.csproj">
       <Project>{1FE97868-4AD5-4286-B438-168483512E57}</Project>
       <Name>CloudSave.GeneralLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CloudSave.GoogleDrive\CloudSave.GoogleDrive.csproj">
+      <Project>{943ceb2b-c8bb-4ff5-b4f0-57464df98e01}</Project>
+      <Name>CloudSave.GoogleDrive</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CloudSave.OneDrive\CloudSave.OneDrive.csproj">
+      <Project>{61201fa0-f5b9-4c3e-945a-55797229ee79}</Project>
+      <Name>CloudSave.OneDrive</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E625917A-FF8F-4187-8BAB-41F024C43413}</ProjectGuid>
+    <ProjectGuid>{61201FA0-F5B9-4C3E-945A-55797229EE79}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CloudSave.Connector</RootNamespace>
-    <AssemblyName>CloudSave.Connector</AssemblyName>
+    <RootNamespace>CloudSave.OneDrive</RootNamespace>
+    <AssemblyName>CloudSave.OneDrive</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,7 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,16 +43,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth\CloudServiceAuth.cs" />
-    <Compile Include="Auth\CloudServiceSettings.cs" />
-    <Compile Include="Auth\ICloudServiceSettings.cs" />
-    <Compile Include="CloudService.cs" />
-    <Compile Include="Auth\ICloudServiceAuth.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="ICloudService.cs" />
-    <Compile Include="ICloudServiceSetting.cs" />
-    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="OneDriveService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CloudSave.Connector\CloudSave.Connector.csproj">
+      <Project>{e625917a-ff8f-4187-8bab-41f024c43413}</Project>
+      <Name>CloudSave.Connector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CloudSave.GeneralLibrary\CloudSave.GeneralLibrary.csproj">
+      <Project>{1fe97868-4ad5-4286-b438-168483512e57}</Project>
+      <Name>CloudSave.GeneralLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

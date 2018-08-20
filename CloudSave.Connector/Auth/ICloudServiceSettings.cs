@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using CloudSave.Connector;
-
-namespace CloudSave.Services
+namespace CloudSave.Connector.Auth
 {
     public interface ICloudServiceSettings
     {
